@@ -1,4 +1,3 @@
-
 namespace App
 {
     public class Statistics
@@ -14,13 +13,15 @@ namespace App
                 return Sum / Count;
             }
         }
+
         public Statistics()
         {
-            Sum += 0.0;
-            Count += 0;
+            Sum = 0;
+            Count = 0;
             High = double.MinValue;
             Low = double.MaxValue;
         }
+
         public void Add(double grades)
         {
             Sum += grades;

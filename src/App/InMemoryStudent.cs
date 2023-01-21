@@ -1,34 +1,16 @@
-using System.Text;
-
 namespace App
 {
     public class InMemoryStudent : StudentBase
     {
         private List<double> grades;
+
         public InMemoryStudent(string name, string surname, int age) : base(name, surname, age)
         {
             grades = new List<double>();
         }
+
         public override event GradeUnder3Delegate GradeUnder3;
-        public override void ChangeOfStudentName(string newName)
-        {
-            bool checkName = false;
-            foreach (var l in newName)
-            {
-                if (char.IsDigit(l))
-                {
-                    checkName = true;
-                }
-            }
-            if (checkName)
-            {
-                Console.WriteLine("Wrong new name");
-            }
-            else
-            {
-                Name = newName;
-            }
-        }
+
         public override void AddGrade(double grade)
         {
             if (grade > 0 && grade <= 6)
@@ -45,6 +27,7 @@ namespace App
                 Console.WriteLine("Grade is out of range.");
             }
         }
+
         public override void AddGrade(string grade)
         {
 
@@ -66,7 +49,6 @@ namespace App
                     Console.WriteLine("Grade is out of range.");
                 }
             }
-
             else
             {
                 double gradeDouble = 0;
@@ -81,14 +63,13 @@ namespace App
                         GradeUnder3(this, new EventArgs());
                     }
                 }
-
                 else
                 {
                     Console.WriteLine("Grade is out of range.");
                 }
-
             }
         }
+
         public override Statistics GetStatistics()
         {
             var result = new Statistics();

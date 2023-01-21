@@ -1,6 +1,5 @@
-using System;
 using App;
-using Xunit;
+
 namespace myapp.Test
 {
     public class StudentTest

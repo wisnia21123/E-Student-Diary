@@ -8,6 +8,7 @@ namespace App
             this.Surname = surname;
             this.Age = age;
         }
+
         public string Name { get; set; }
         public string Surname { get; set; }
         public int Age { get; set; }

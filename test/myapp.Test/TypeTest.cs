@@ -1,7 +1,4 @@
-using System;
 using App;
-using Xunit;
-
 
 namespace myapp.Test
 {

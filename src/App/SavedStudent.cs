@@ -1,36 +1,15 @@
-using System.Text;
-
 namespace App
 {
     public delegate void GradeUnder3Delegate(object sender, EventArgs args);
+
     public class SavedStudent : StudentBase
     {
-        DateTime actualTime = DateTime.UtcNow;
-        private List<double> grades;
-
         public SavedStudent(string name, string surname, int age) : base(name, surname, age)
         {
         }
+
         public override event GradeUnder3Delegate GradeUnder3;
-        public override void ChangeOfStudentName(string newName)
-        {
-            bool checkName = false;
-            foreach (var c in newName)
-            {
-                if (char.IsDigit(c))
-                {
-                    checkName = true;
-                }
-            }
-            if (checkName)
-            {
-                Console.WriteLine("Wrong new name");
-            }
-            else
-            {
-                Name = newName;
-            }
-        }
+
         public override void AddGrade(double grade)
         {
             if (grade > 0 && grade <= 6)
@@ -42,6 +21,7 @@ namespace App
                 Console.WriteLine("Grade is out of range.");
             }
         }
+
         public override void AddGrade(string grade)
         {
             if (grade.Length == 2 && char.IsDigit(grade[0]) && grade[0] <= '6' && (grade[1] == '+'))
@@ -63,7 +43,7 @@ namespace App
                 var isParsed = double.TryParse(grade, out gradeDouble);
                 if (isParsed && gradeDouble > 0 && gradeDouble <= 6)
                 {
-                    WriteAddgradeInFileWithEvent(grade);
+                    WriteAddgradeInFile(gradeDouble);
                 }
                 else
                 {
@@ -71,6 +51,7 @@ namespace App
                 }
             }
         }
+
         public override Statistics GetStatistics()
         {
             var result = new Statistics();
@@ -87,6 +68,7 @@ namespace App
             }
             return result;
         }
+
         private void WriteAddgradeInFileWithEvent(double grade)
         {
             WriteAddgradeInFile(grade);
@@ -95,6 +77,7 @@ namespace App
                 GradeUnder3(this, new EventArgs());
             }
         }
+
         private void WriteAddgradeInFile(double grade)
         {
             using (var writer = File.AppendText($"{Name} {Surname} {Age} Grade.txt"))
@@ -103,26 +86,7 @@ namespace App
             }
             using (var writer = File.AppendText($"{Name} {Surname} {Age} Audit.txt"))
             {
-                writer.WriteLine($"{actualTime} {grade}");
-            }
-        }
-        private void WriteAddgradeInFileWithEvent(string grade)
-        {
-            WriteAddGradeWithPlusInFile(grade);
-            if (GradeUnder3 is not null)
-            {
-                GradeUnder3(this, new EventArgs());
-            }
-        }
-        private void WriteAddGradeWithPlusInFile(string grade)
-        {
-            using (var writer = File.AppendText($"{Name} {Surname} {Age} Grade.txt"))
-            {
-                writer.WriteLine(grade);
-            }
-            using (var writer = File.AppendText($"{Name} {Surname} {Age} Audit.txt"))
-            {
-                writer.WriteLine($"{actualTime} {grade}");
+                writer.WriteLine($"{DateTime.UtcNow} {grade}");
             }
         }
     }
