@@ -30,7 +30,7 @@ namespace App
             }
             else
             {
-                string Name = newName;
+                Name = newName;
             }
         }
     }
